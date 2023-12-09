@@ -15,10 +15,10 @@ Follow these instructions to perform video stabilization using the pretrained mo
 2. **Run the Stabilization Script:**
    - Run the following command:
      ```bash
-     python stabilize.py --model ENet --in_path unstable_video_path --out_path result_path
+     python stabilize.py --model `ENet` --in_path unstable_video_path --out_path result_path
      ```
    - Replace `unstable_video_path` with the path to your input unstable video.
    - Replace `result_path` with the desired path for the stabilized output video.
-     You can chose between --model `ENet` and 'UNet`
-Make sure you have the necessary dependencies installed and that your environment is set up correctly before running the command.
-
+   - You can choose between --model `ENet` and `UNet`.
+   
+Make sure you have the necessary dependencies installed, and that your environment is set up correctly before running the command.
