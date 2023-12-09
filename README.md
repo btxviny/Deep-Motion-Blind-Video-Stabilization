@@ -1,7 +1,7 @@
 # Deep-Motion-Blind-Video-Stabilization
 
 This is a PyTorch implementation of the 'Deep Motion Blind Video Stabilization' algorithm.https://github.com/btxviny/Deep-Motion-Blind-Video-Stabilization/blob/main/result.gif
-![alt text]([[https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1"](https://github.com/btxviny/Deep-Motion-Blind-Video-Stabilization/blob/main/result.gif)]
+![alt text](https://github.com/btxviny/Deep-Motion-Blind-Video-Stabilization/blob/main/result.gif)
 ## Implementation Details
 
 Provide details about your PyTorch implementation here.
