@@ -42,3 +42,33 @@ Follow these instructions to train the model:
      ```
 
      - Adjust `/path/to/deepstab_stable_videos`, `/path/to/deepstab_unstable_videos`, `/path/to/generated_stable_videos`, and `/path/to/generated_unstable_videos` with the actual paths for your project.
+
+3. **Create Training Data Txt Files for Stage 1 and 2:**
+   - Run the following command to create the training data txt files for stages 1 and 2:
+
+     ```bash
+     python create_training_list.py --stable_path /path/to/deepstab_modded/stable_60 --unstable_path /path/to/deepstab_modded/unstable --skip 2 --txt_path ./trainlist.txt --stage3 False
+     ```
+
+     - Adjust `/path/to/deepstab_modded/stable_60`, `/path/to/deepstab_modded/unstable`, and `./trainlist.txt` with the actual paths for your project.
+
+4. **Create Training Data Txt File for Stage 3:**
+   - Run the following command to create the training data txt file for stage 3:
+
+     ```bash
+     python create_training_list.py --stable_path /path/to/generated_stable_videos --unstable_path /path/to/generated_unstable_videos --skip 2 --txt_path ./trainlist_stage3.txt --stage3 True
+     ```
+
+     - Adjust `/path/to/generated_stable_videos`, `/path/to/generated_unstable_videos`, and `./trainlist_stage3.txt` with the actual paths for your project.
+
+5. **Start Training:**
+   - Use the training script with the appropriate parameters. Modify the script as needed based on your dataset location and training preferences.
+
+     ```bash
+     python train.py --dataset_path /path/to/dataset --other_training_parameters
+     ```
+
+   - Adjust `/path/to/dataset` to the actual path where you extracted the training datasets.
+   - Provide any other training parameters or options as needed.
+
+Ensure that you have the required dependencies installed for training, and check the scripts for additional configurations or options.
