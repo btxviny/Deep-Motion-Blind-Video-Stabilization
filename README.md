@@ -1,7 +1,7 @@
 # Deep-Motion-Blind-Video-Stabilization
 
 This is a PyTorch implementation of the 'Deep Motion Blind Video Stabilization' algorithm.
-[Video Stabilization Example](result.gif)
+!(result.gif)
 
 ## Implementation Details
 
