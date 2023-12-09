@@ -13,14 +13,12 @@ Follow these instructions to perform video stabilization using the pretrained mo
    - Place the downloaded weights file in the main folder of your project.
 
 2. **Run the Stabilization Script:**
-   - Open a terminal and navigate to the main folder of your project.
    - Run the following command:
      ```bash
      python stabilize.py --model ENet --in_path unstable_video_path --out_path result_path
      ```
    - Replace `unstable_video_path` with the path to your input unstable video.
    - Replace `result_path` with the desired path for the stabilized output video.
-
+     You can chose between --model `ENet` and 'UNet`
 Make sure you have the necessary dependencies installed and that your environment is set up correctly before running the command.
 
-Feel free to customize the paths and instructions based on your project's structure. If you have any additional details or variations in the process, you can include them in these instructions.
