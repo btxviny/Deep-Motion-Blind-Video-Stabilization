@@ -62,7 +62,4 @@ Follow these instructions to train the model:
 
      ```
 
-   - Adjust `/path/to/dataset` to the actual path where you extracted the training datasets.
-   - Provide any other training parameters or options as needed.
-
-Ensure that you have the required dependencies installed for training, and check the scripts for additional configurations or options.
+   - Adjust directory paths as needed.
