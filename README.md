@@ -53,7 +53,7 @@ Follow these instructions to train the model:
      - Adjust `/path/to/deepstab_modded/stable_60`, `/path/to/deepstab_modded/unstable`, and `./trainlist.txt` with the actual paths for your project.
 
 4. **Start Training:**
-   - Use the training script with the appropriate parameters. Modify the script as needed based on your dataset location and training preferences.
+   - Run the following commands to begin each stage's training.
 
      ```bash
      python stage1_train.py --model ENet --ckpt_dir ./stage1/ --shape 256 256 3 --batch_size 1 --txt_path ./trainlist.txt
