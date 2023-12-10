@@ -34,38 +34,32 @@ Follow these instructions to train the model:
 
    - Extract the contents of the downloaded datasets to a location on your machine.
 
-2. **Create Dataset for Third Training Stage:**
+2. **Create Dataset for the third training stage described in the paper:**
    - Run the following command to create the dataset for the third training stage:
 
      ```bash
      python create_dataset_stage3.py --src_stable_path /path/to/deepstab_stable_videos --src_unstable_path /path/to/deepstab_unstable_videos --dst_stable_path /path/to/generated_stable_videos --dst_unstable_path /path/to/generated_unstable_videos
      ```
 
-     - Adjust `/path/to/deepstab_stable_videos`, `/path/to/deepstab_unstable_videos`, `/path/to/generated_stable_videos`, and `/path/to/generated_unstable_videos` with the actual paths for your project.
+     - Adjust `/path/to/deepstab_stable_videos`, `/path/to/deepstab_unstable_videos`, `/path/to/generated_stable_videos`, and `/path/to/generated_unstable_videos` with the actual paths for your project. This will also create a list of all training input data for the third training stage.
 
 3. **Create Training Data Txt Files for Stage 1 and 2:**
    - Run the following command to create the training data txt files for stages 1 and 2:
 
      ```bash
-     python create_training_list.py --stable_path /path/to/deepstab_modded/stable_60 --unstable_path /path/to/deepstab_modded/unstable --skip 2 --txt_path ./trainlist.txt --stage3 False
+     python create_training_list.py --stable_path /path/to/deepstab_modded/stable_60 --unstable_path /path/to/deepstab_modded/unstable --skip 2 --txt_path ./trainlist.txt
      ```
 
      - Adjust `/path/to/deepstab_modded/stable_60`, `/path/to/deepstab_modded/unstable`, and `./trainlist.txt` with the actual paths for your project.
 
-4. **Create Training Data Txt File for Stage 3:**
-   - Run the following command to create the training data txt file for stage 3:
-
-     ```bash
-     python create_training_list.py --stable_path /path/to/generated_stable_videos --unstable_path /path/to/generated_unstable_videos --skip 2 --txt_path ./trainlist_stage3.txt --stage3 True
-     ```
-
-     - Adjust `/path/to/generated_stable_videos`, `/path/to/generated_unstable_videos`, and `./trainlist_stage3.txt` with the actual paths for your project.
-
-5. **Start Training:**
+4. **Start Training:**
    - Use the training script with the appropriate parameters. Modify the script as needed based on your dataset location and training preferences.
 
      ```bash
-     python train.py --dataset_path /path/to/dataset --other_training_parameters
+     python stage1_train.py --model ENet --ckpt_dir ./stage1/ --shape 256 256 3 --batch_size 1 --txt_path ./trainlist.txt
+     python stage2_train_gp.py --model ENet --ckpt_dir ./stage2/ --shape 256 256 3 --batch_size 1 --txt_path ./trainlist.txt
+     python stage3_train.py --model ENet --ckpt_dir ./stage3/ --shape 128 128 3 --batch_size 1 --txt_path ./trainlist_stage3.txt
+
      ```
 
    - Adjust `/path/to/dataset` to the actual path where you extracted the training datasets.
