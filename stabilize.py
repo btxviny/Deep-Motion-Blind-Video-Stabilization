@@ -26,7 +26,7 @@ def save_video(frames, path):
     out.release()
 
     
-def stabilize(in_path,out_path):
+def stabilize(in_path,out_path,skip):
     
     if not os.path.exists(in_path):
         print(f"The input file '{in_path}' does not exist.")
@@ -54,7 +54,7 @@ def stabilize(in_path,out_path):
     # stabilize video
     frames_tensor = torch.from_numpy(frames).permute(0,3,1,2).float().to('cpu')
     stable_frames_tensor = frames_tensor.clone()
-    SKIP = 16
+    SKIP = skip
     cv2.namedWindow('window',cv2.WINDOW_NORMAL)
     def get_batch(idx):
         batch = torch.zeros((5,3,H,W)).float()
@@ -90,9 +90,11 @@ if __name__ == '__main__':
     args = parse_args()
     if args.model == 'ENet':
         model = ENet(in_channels=15, out_channels=3, residual_blocks=64).train().to(device)
+        skip = 2
         ckpt_dir = './ckpts/ENet/'
     elif args.model == 'UNet':
         model = UNet().train().to(device)
+        skip = 16
         ckpt_dir = './ckpts/UNet/'
     else:
         print('Please choose either ENet or UNet model')
@@ -104,4 +106,4 @@ if __name__ == '__main__':
         state_dict = torch.load(os.path.join(ckpt_dir,latest))
         model.load_state_dict(state_dict['model'])
         print(f'loaded weights from previous session: {latest}')
-    stabilize(args.in_path, args.out_path)
+    stabilize(args.in_path, args.out_path,skip)
