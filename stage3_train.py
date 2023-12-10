@@ -14,6 +14,7 @@ from torchvision import transforms ,models
 
 from models.models import ENet,UNet,TempDiscriminator3D
 from data.datagen_stage3 import DataGenerator
+from config import SKIP
 
  
 def parse_args():
@@ -67,8 +68,7 @@ def get_data_loader(shape, txt_path, skip, batch_size):
         def __iter__(self):
             return iter(self.data_generator())
     data_gen = DataGenerator(shape= shape, txt_path= txt_path, skip=skip)
-    data_gen = IterDataset(data_gen)
-    train_ds = data.DataLoader(data_gen, batch_size = batch_size)
+    train_ds = iter(data_gen())
     return train_ds
 
 #loss functions
@@ -259,10 +259,8 @@ if __name__ == '__main__':
     #set up models
     if args.model == 'ENet':
         generator = ENet(in_channels=15, out_channels=3, residual_blocks=64).train().to(device)
-        skip = 2
     elif args.model == 'UNet':
         generator = UNet().train().to(device)
-        skip = 16
     else:
         print('Please choose either ENet or UNet model')
         exit()
@@ -276,6 +274,6 @@ if __name__ == '__main__':
     #load checkpoints
     load_checkpoint(generator, discriminator,g_optimizer,d_optimizer, args.ckpt_dir)
     #load dataset
-    train_ds = get_data_loader(shape = args.shape, txt_path = './trainlist_stage3_(+-16).txt', skip = skip, batch_size=args.batch_size)
+    train_ds = get_data_loader(shape = args.shape, txt_path = args.txt_path, skip = SKIP, batch_size=args.batch_size)
     writer = SummaryWriter('./runs/stage3/')
     train(generator, g_optimizer, discriminator, d_optimizer,train_ds, writer, starting_epoch, args)

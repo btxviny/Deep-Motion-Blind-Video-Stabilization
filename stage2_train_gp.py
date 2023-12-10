@@ -14,14 +14,13 @@ import torchvision
 
 from models.models import ENet,UNet,Critic
 from data.datagen import DataGenerator
-
+from config import SKIP
 
 def parse_args():
     parser = argparse.ArgumentParser(description='DMBVS-stage1-train')
     parser.add_argument('--model', type=str, help='Model Architecture')
     parser.add_argument('--ckpt_dir', type=str, help='path to stage 1 weights directory')
     parser.add_argument('--shape', nargs='+', type=int, help='H W C values', required=True)
-    parser.add_argument('--skip', type=int, help='temporal distance of input frames')
     parser.add_argument('--batch_size', type=int, help='batch size')
     parser.add_argument('--txt_path', type=str, help='path to training list')
     parser.add_argument('--lambda_gp', type=float, default=10.0, help='Lambda for gradient penalty term')
@@ -239,6 +238,6 @@ if __name__ == '__main__':
     #load checkpoints
     load_checkpoint(generator,critic,g_optimizer,c_optimizer, args.ckpt_dir)
     #load dataset
-    train_ds = get_data_loader(shape = args.shape, txt_path = args.txt_path, skip = args.skip, batch_size=args.batch_size)
+    train_ds = get_data_loader(shape = args.shape, txt_path = args.txt_path, skip = SKIP, batch_size=args.batch_size)
     writer = SummaryWriter('./runs/stage2/')
     train(generator, g_optimizer, critic, c_optimizer,train_ds, writer, starting_epoch, args)

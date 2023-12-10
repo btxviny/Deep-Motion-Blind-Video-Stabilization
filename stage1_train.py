@@ -14,6 +14,7 @@ import torchvision
 
 from models.models import ENet,UNet
 from data.datagen import DataGenerator
+from config import SKIP
 
 
 def parse_args():
@@ -21,14 +22,13 @@ def parse_args():
     parser.add_argument('--model', type=str, help='Model Architecture')
     parser.add_argument('--ckpt_dir', type=str, help='path to stage 1 weights directory')
     parser.add_argument('--shape', nargs='+', type=int, help='H W C values', required=True)
-    parser.add_argument('--skip', type=int, help='temporal distance of input frames')
     parser.add_argument('--batch_size', type=int, help='batch size')
     parser.add_argument('--txt_path', type=str, help='path to training list')
     return parser.parse_args()
 
 def load_checkpoint(model, optimizer, ckpt_dir):
     if not os.path.exists(ckpt_dir):
-        os.makedirs(ckpt_dir)
+        os.makedirs(ckpt_dir,exist_ok=True)
         print(f'Checkpoint directory {ckpt_dir} created.')
     ckpts = [x for x in os.listdir(ckpt_dir) if x.endswith('.pth')]
     if ckpts:
@@ -114,6 +114,6 @@ if __name__ == '__main__':
         exit()
     optimizer = torch.optim.Adam(generator.parameters(), lr= 1e-4)
     load_checkpoint(generator, optimizer, args.ckpt_dir)
-    train_ds = get_data_loader(shape = args.shape, txt_path = args.txt_path, skip = args.skip, batch_size=args.batch_size)
+    train_ds = get_data_loader(shape = args.shape, txt_path = args.txt_path, skip = SKIP, batch_size=args.batch_size)
     writer = SummaryWriter('./runs/stage1/')
     train(generator, optimizer, train_ds, writer, starting_epoch)
