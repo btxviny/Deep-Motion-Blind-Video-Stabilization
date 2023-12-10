@@ -7,16 +7,12 @@ parser.add_argument('--stable_path', type=str, help='path to stable videos of De
 parser.add_argument('--unstable_path', type=str, help='path to unstable videos of DeepStab Modded')
 parser.add_argument('--skip', type=int, help='temporal distance of input frames')
 parser.add_argument('--txt_path', type=str, help='path to create trainlist txt file')
-parser.add_argument('--stage3', type=bool, help='is it stage3 or not')
 # Parse the command-line arguments
 args = parser.parse_args()
 
 txt_path = args.txt_path
 stable_path = args.stable_path
 unstable_path = args.unstable_path
-coeff = 1
-if args.stage3 == True:
-    coeff = 8
 video_names = os.listdir(unstable_path)
 with open(txt_path,'w') as f:    
     for video in video_names:
@@ -28,7 +24,7 @@ with open(txt_path,'w') as f:
         u_frame_count = int(unstable_cap.get(cv2.CAP_PROP_FRAME_COUNT))
         num_of_frames = min(s_frame_count,u_frame_count)
         
-        for frame_idx in range(args.skip,num_of_frames- (coeff * args.skip)):
+        for frame_idx in range(args.skip,num_of_frames- args.skip):
             line = f'{s_path},{u_path},{frame_idx}\n'
             f.write(line)
 
